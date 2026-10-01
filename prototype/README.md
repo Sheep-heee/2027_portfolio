@@ -15,6 +15,7 @@ node prototype/server.cjs
 - 목록: http://127.0.0.1:4173/index.html#projects
 - 상세: http://127.0.0.1:4173/index.html#detail/web
 - 문의: http://127.0.0.1:4173/index.html#contact
+- 블록 편집 실증: http://127.0.0.1:4173/editor.html (내용은 이 브라우저에만 저장, 사이트 공개 없음)
 
 비교 화면에서 네 화면과 모바일 360/390/768px 선택 가능. 각 iframe은 실제 해당 폭으로 렌더링한다. 데스크톱은 1440px 화면을 50% 축소 표시하며 좁은 비교 창에서는 가로 스크롤한다. 서체 크기의 최종 검토는 단독 화면에서 한다. 브라우저 너비를 바꾸면 단독 화면도 반응형으로 작동한다. 서버는 localhost만 수신한다. 종료는 실행 터미널에서 Ctrl+C.
 
@@ -38,3 +39,5 @@ node prototype/server.cjs
 - 네트워크 요청 없이 로컬 폰트와 이미지를 사용한다. `assets/montserrat.css`는 다운로드 출처 기록이며 페이지에서 로드하지 않는다.
 
 코드 구조 명세: `../docs/CODE_STRUCTURE_SPEC.md`.
+
+블록 편집 실증 안내: `../docs/BLOCK_EDITOR_STUDY.md`. 모델 검증은 `node --test prototype/block-model.test.mjs`로 실행한다.

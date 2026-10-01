@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {initialProject,duplicateBlock,moveBlock,validateProject} from './block-model.mjs';
+test('복제본은 독립 ID와 내용을 가지며 원본을 변경하지 않는다',()=>{const p=initialProject();const original=p.blocks[0];const result=duplicateBlock(p.blocks,original.id);assert.equal(result.length,4);assert.notEqual(result[1].id,original.id);result[1].body='독립 수정';assert.notEqual(original.body,result[1].body);assert.equal(p.blocks.length,3);});
+test('순서 이동은 블록 ID·내용을 보존하고 경계 밖 이동은 무시한다',()=>{const p=initialProject();const ids=p.blocks.map(b=>b.id);const result=moveBlock(p.blocks,ids[0],2);assert.deepEqual(result.map(b=>b.id),[ids[1],ids[2],ids[0]]);assert.deepEqual(result[2],p.blocks[0]);assert.deepEqual(moveBlock(p.blocks,ids[0],-1),p.blocks);});
+test('JSON 저장 왕복은 줄바꿈과 순서를 그대로 보존한다',()=>{const p=initialProject();p.blocks[0].body='첫 줄\n  들여쓰기\n<태그도 텍스트>';p.blocks=moveBlock(p.blocks,p.blocks[0].id,2);const loaded=validateProject(JSON.parse(JSON.stringify(p)));assert.deepEqual(loaded,p);});
+test('손상되거나 지원하지 않는 저장 형식은 거절한다',()=>{const p=initialProject();p.blocks[1].id=p.blocks[0].id;assert.throws(()=>validateProject(p));assert.throws(()=>validateProject({...initialProject(),schemaVersion:2}));const invalid=initialProject();invalid.blocks[1].src='https://unapproved.example/image.png';assert.throws(()=>validateProject(invalid));});

@@ -17,6 +17,7 @@
 | [코드 작성 규칙](docs/CODE_GUIDELINES.md) | 직접 커스텀하기 쉬운 구현·변경 규칙 |
 | [코드 구조 명세](docs/CODE_STRUCTURE_SPEC.md) | 시안과 실제 앱의 경계, 모델·모듈·데이터 흐름 |
 | [대표 시안 검토 기록](docs/PROTOTYPE_REVIEW.md) | 화면 검토 포인트, 검증 결과, 미검증 범위 |
+| [블록 편집 실증](docs/BLOCK_EDITOR_STUDY.md) | 편집·복제·순서 변경·로컬 저장·미리보기 검토 |
 | [기술·비용 비교](docs/TECHNOLOGY_OPTIONS.md) | 미확정 권장 구성, 비용과 공식 자료 |
 | [현재 상태](docs/STATUS.md) | 완료 사항, 다음 단계, 결정 기록 |
 

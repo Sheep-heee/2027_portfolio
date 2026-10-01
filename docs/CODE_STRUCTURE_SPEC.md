@@ -8,6 +8,8 @@
 
 검토 엔트리: `prototype/review.html`, 실제 반응형 화면: `prototype/index.html`.
 
+2단계 편집 실증은 `prototype/editor.html`로 분리되어 있다. `block-model.mjs`가 블록 구조·복제·이동·검증, `editor.mjs`가 편집·로컬 저장, `editor-preview.mjs`가 안전한 DOM 렌더링을 담당한다. 실증 localStorage를 운영 CMS 저장소로 가정하지 않는다. 상세는 `docs/BLOCK_EDITOR_STUDY.md` 참조.
+
 | 시안 파일 | 책임 | 실제 앱으로 옮길 개념 |
 | --- | --- | --- |
 | styles.css | 토큰·폰트·레이아웃·반응형 | 토큰과 컴포넌트별 CSS Modules |
