@@ -33,6 +33,15 @@ src/
 
 ## 스타일과 UI
 
+- 확정 CSS 규칙: `html { font-size: 16px; }`, 기본 본문 `1rem`. 글자·여백·gap·높이·아이콘 등 크기는 rem을 사용한다. 비율(%), vw 기반 유동 크기, 뷰포트 높이, 단위 없는 행간은 용도에 맞게 유지한다.
+- px 예외는 content width(컨테이너·읽기 폭·검토 화면 폭), border 두께, breakpoint다. 루트 16px 설정은 기준 정의를 위한 예외다. SVG viewBox·도형 좌표는 CSS 길이 변환 대상이 아니다.
+- KoddiUD는 400=Regular.woff2, 500=Bold.woff2, 700=ExtraBold.woff2로 각각 @font-face 지정한다. Regular에 두꺼운 weight 범위를 선언하거나 합성 굵기를 쓰지 않는다. `font-synthesis: none`을 적용한다. 800 등 미등록 굵기는 쓰지 않는다.
+- 위 KoddiUD 숫자 매핑은 Montserrat에 그대로 적용하지 않는다. Montserrat는 해당 파일의 실제 400/700 매핑을 유지한다.
+- KoddiUD의 파일 선택을 명시하기 위해 패밀리를 `KoddiRegular` / `KoddiBold` / `KoddiExtraBold`로 분리한다. 본문은 Regular+400, 일반 제목 h1/h2/h3는 Bold+500, 홈 큰 이름은 ExtraBold+700을 직접 지정한다. weight 숫자만 바꾸지 않는다. 자유 블록에도 같은 규칙을 적용한다.
+- 폰트 검증은 computed weight만으로 완료하지 않는다. computed family와 해당 @font-face의 src, 폰트 로드 상태까지 확인한다.
+- 사용자 실측 제한: KoddiBold(500)는 **정확히 1.5rem(24px) 또는 1.875rem(30px) 이상**에서만 사용한다. 20px대의 다른 크기와 24px 미만에는 사용하지 않는다. 해당 범위의 제목은 안정적인 크기로 조정하고 작은 메뉴·필터·보조 정보는 Regular(400)를 사용한다. 강조는 선·간격·표시 상태로 보완한다.
+- KoddiBold에는 24~30px 사이를 통과하는 clamp/vw 유동 크기를 적용하지 않는다. 24px 고정 또는 최솟값 30px 이상의 크기를 사용한다. 이 결과는 사용자의 현재 환경 테스트이며 ExtraBold·Montserrat에 동일 제한을 추정해 적용하지 않는다.
+
 - CSS Modules 우선 제안. 전역 CSS는 reset·폰트·토큰에 제한.
 - 색·서체·간격·최대 너비·반응형 기준의 단일 정의. 임의 숫자 반복을 줄인다.
 - 기본 블록은 공통 토큰을 따르고 자유 블록은 격리 문서에 승인된 토큰을 전달.

@@ -28,6 +28,10 @@ node prototype/server.cjs
 
 ## 서체·이미지
 
+사용자가 설정한 `.gitignore`에 따라 fonts 폴더는 Git에 포함하지 않는다. 새 checkout에서 시안을 열려면 아래 서체 파일과 Montserrat 라이선스를 로컬 `assets/fonts/`에 다시 준비한다. 현재 작업 PC에는 파일이 있다.
+
+확정 CSS: 루트 16px, 기본 1rem, 일반 크기 rem. content width·border·breakpoint는 px. KoddiUD 400=Regular, 500=Bold, 700=ExtraBold이며 합성 굵기를 사용하지 않는다.
+
 - KoddiUD: 사용자의 Downloads에 있는 Regular/Bold/ExtraBold WOFF2를 수정 없이 복사. 공식 이용 안내: https://www.koddi.or.kr/ud/sub1_2 . 서체 자체 판매·수정 금지, 배포 전 공식 조건 재확인.
 - Montserrat: Google Fonts 공식 CSS가 가리키는 Regular/Bold 파일을 저장. `assets/fonts/Montserrat-OFL.txt` 동봉.
 - SVG는 이번 시안에서 직접 만든 중립 비율 테스트 이미지. 외부 레퍼런스 사진·문구 복제 없음.
