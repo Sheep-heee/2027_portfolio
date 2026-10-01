@@ -41,3 +41,5 @@ node prototype/server.cjs
 코드 구조 명세: `../docs/CODE_STRUCTURE_SPEC.md`.
 
 블록 편집 실증 안내: `../docs/BLOCK_EDITOR_STUDY.md`. 모델 검증은 `node --test prototype/block-model.test.mjs`로 실행한다.
+
+자유 HTML·CSS 실증: `../docs/CUSTOM_BLOCK_STUDY.md`. 현재 작업은 로컬 실증이며 공개 CMS는 미구현이다.
