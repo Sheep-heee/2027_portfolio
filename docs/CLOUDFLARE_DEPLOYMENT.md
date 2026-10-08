@@ -1,6 +1,25 @@
 # Cloudflare 배포 준비
 
+## 실제 검토 배포 결과 (2026-10-08)
+
+- 사이트: https://portfolio-web.jinhh.workers.dev
+- 관리자: https://portfolio-web.jinhh.workers.dev/studio
+- 초안 인증: https://portfolio-web.jinhh.workers.dev/preview
+- Workers Free, 최종 버전05a4a659-4573-41f0-8c78-2aa895f425e4. 두 원격 secret 등록 유지.
+- Studio SSR500은 StudioLoader의 브라우저 전용 로딩으로 수정. 사용자 CORS credentials 저장 후 로그인 제공자 화면 확인. 사용자 로그인/원격 편집 저장은 미검증.
+- 원격 CMS 초안 인증·원본 코드 일치·공개본 조회, 없는 상세404·외부 출처403 확인, 최종 Next 빌드 통과.
+- 일부 요청 CPU37~81ms, 재요청 홈6ms. 당시200/outcome ok였지만 기본 Free10ms 초과 샘플이 있어 지속 안정성 별도 확인 필요. 요금제 변경 없음.
+- 아래 준비/주소 대기 기록은 과거 단계. 전체 사이트/문의/앱 자유 코드 격리 렌더러는 미완료.
+
 확인일: 2026-10-08. 현재는 로컬 실증까지다. 사용자는 Cloudflare 가입 완료. wrangler whoami로 CLI 미인증 확인. 요금제 변경·원격 배포는 수행하지 않았다.
+
+후속 사용자 확인: CLI 로그인 완료, 현재 Workers Free. dry-run 업로드 약8.85MiB로 공식 비압축64MiB 제한 충족. Free 검토 배포 가능 후보이나 요청당 CPU10ms·시작시간1초는 실제 배포 후 확인 필요. 지금 결제 변경 권장하지 않으며 Paid 운영 결정은 유지하되 Free 검토 사용을 제안한다. 원격 secret/배포는 아직 미수행.
+
+후속 Free 검토 배포 승인·진행: portfolio-web 생성과 두 원격 secret 등록, 빌드/asset/Worker 업로드 성공. Cloudflare 시작시간12ms. 계정의 workers.dev 기본 subdomain 미등록으로 주소 활성화 실패. 사용자 onboarding에서 기본 이름 등록 후 배포 재실행 필요. 이 이름은 공개 이름과 별개이며 실제 외부 주소는 등록 완료 전 확정하지 않는다. 외부 HTTP/미리보기/CPU 사용은 아직 미검증.
+
+사용자가 Wrangler의 onboarding 링크 404 보고. 해당 링크를 다시 안내하지 않는다. 공식 현재 안내는 Cloudflare 대시보드 계정의 Workers & Pages 목록에서 Your subdomain 옆 Change 선택. 개별 portfolio-web 상세의 도메인 설정과 구분. 새 계정에서 메뉴를 찾기 어려우면 사용자가 원하는 계정 subdomain 문자열을 지정하고 Wrangler의 등록 흐름으로 에이전트가 등록·배포를 마무리한다. subdomain은 임의로 선택하지 않는다.
+
+제한 확인(2026-10-08): https://developers.cloudflare.com/workers/platform/limits/
 
 ## 실행 경로와 선택 상태
 

@@ -116,6 +116,24 @@
 
 ## 2026-10-08 버전관리·보안 검토 순서
 
+## 2026-10-08 Workers Free 검토 배포 (주소 등록 대기)
+
+### 사용자 확인 및 다음 단계
+
+사용자가 배포 상태 확인 완료·Git push 요청. 대표 화면/서체/블록 편집/자유 코드 prototype 검토와 실제 CMS 연결·Free 배포의 기본 실증은 완료. 전체 운영 검증은 미완료이며 실제 운영 모델(공유 프로젝트·언어·이미지), 승인 시안의 실제 앱 화면, 앱 자유 코드 격리 렌더러, 공개 후 수정·다국어 상태·백업/복원, 문의 D1/Resend, 원격 관리자 편집, Free CPU 안정성 검증이 남는다. 다음 권장 작업은 운영 CMS 데이터 모델 확정 및 실제 앱 연결. 이번 요청은 상태 커밋/푸시와 다음 단계 안내이며 전체 구현 착수 승인을 추정하지 않는다.
+
+### 등록 완료 후 최종 배포 결과
+
+사용자 등록 후 배포 성공: https://portfolio-web.jinhh.workers.dev . 최초 Studio SSR500 발견, StudioLoader.tsx 브라우저 전용 dynamic(ssr:false) 경계 추가 후 재배포. 최종 버전05a4a659-4573-41f0-8c78-2aa895f425e4. 홈/preview/Studio200·없는 상세404·외부 Origin403, 실제 CMS2블록 재조회/초안 인증/원본 코드 일치 확인. 공개 테스트 본문 존재, 최종 Next 빌드 통과.
+
+사용자 CORS credentials 저장 후 외부 Studio 로그인 제공자 화면 확인. 실제 사용자 로그인/원격 Studio 편집은 미수행. Free 유지, 문의/D1/메일/전체 화면 구현 미완료. 일부 CPU37~81ms(재요청 홈6ms), 당시200/outcome ok지만 기본10ms 초과 샘플 존재하므로 Free 지속 안정성 미보장. 부하 시험·CPU 최적화·요금제 변경 미수행. 변경은 미커밋, 자동 push 없음. 아래 대기 기록은 과거 단계다.
+
+사용자 onboarding 링크 404 보고. 공식 안내 재확인: Workers & Pages 목록의 Your subdomain → Change. 원하는 subdomain 이름만 받으면 Wrangler에서 직접 등록하는 대안 가능. 아직 이름 미지정, 원격 공개 주소 미발급.
+
+사용자가 Free 검토 배포 명시 승인. Cloudflare OAuth 인증 확인, portfolio-web Worker 생성 및 SANITY_API_READ_TOKEN/PREVIEW_SECRET 원격 등록 성공(기존 로컬 값, 출력 없음). 로컬 Worker가 빌드 파일을 잠가 최초 시도 EBUSY, 해당 에이전트 서버 종료 후 재시도. vinext 빌드·정적 asset 업로드·Worker 업로드 통과, 시작시간12ms, 업로드9061.25KiB. 새 계정 workers.dev subdomain 미등록으로 마지막 주소 활성화 실패. 기본 subdomain은 사용자 선택이 필요하여 onboarding 등록 안내·회신 대기. 외부 접속/CMS 인증·CPU10ms 제한 검증은 아직 미수행. 요금제 변경 없음, 현재 변경 미커밋.
+
+보안 수정은 1ea48f6로 origin/main 푸시 완료. 사용자 Cloudflare 로그인 완료·현재 Workers Free 확인. 원격 변경 없는 wrangler deploy --dry-run 통과: 업로드 9061.25 KiB(약8.85 MiB), gzip2620.18 KiB. 2026-10-08 공식 제한은 Free/ Paid 모두 비압축64MiB, Free 하루10만요청·HTTP CPU10ms. 용량 조건 충족이며 CPU/시작시간은 원격 실행 미검증. Free 검토 배포 권장, 기존 Paid 운영 결정 자체를 Free 확정으로 바꾸지 않음. 원격 secret·배포는 미수행.
+
 사용자가 보안 수정 상태 push 및 Cloudflare 가입 후 절차 안내 요청. 관련 파일 검토·비밀 값 제외 후 커밋/푸시 대상 선정. wrangler whoami 결과 CLI 미인증, 로그인·원격 secret·원격 배포는 아직 수행하지 않았다. 사용자가 프로젝트 터미널에서 wrangler login 후 확인하면 다음 단계로 진행한다. 가입 완료를 요금제 결제 완료로 해석하지 않는다.
 
 후속 사용자 승인으로 보안 의존성 수정 수행. SECURITY_AUDIT.md의 후속 결과 참고: YAML/TOML/UUID/sharp/fflate 수정판 적용, npm ls 정상, 기능 호환 확인·타입·2개 테스트·Next/Cloudflare 빌드·Worker CMS 인증 통과. audit 29→19, 원인 7→2(braces/sprintf-js, 수정판 없음). 테스트 공개본이 현재 존재함을 읽기 조회로 관찰했으며 에이전트가 공개하지 않았다. 원격 배포·커밋·푸시 미수행. 로컬 Next 개발 서버 재시작.

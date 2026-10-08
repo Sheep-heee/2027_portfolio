@@ -1,4 +1,4 @@
-import Studio from "@/sanity/Studio";
+import Studio from "@/sanity/StudioLoader";
 import "../../study.css";
 export default function Page() {
   const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
