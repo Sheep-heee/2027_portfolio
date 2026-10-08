@@ -11,7 +11,7 @@
 
 ## 반드시 지킬 사항
 
-- 대표 화면·서체 최종 확인은 완료했고 현재 단계는 블록 편집 실증·검토다. `prototype/README.md`, `docs/BLOCK_EDITOR_STUDY.md`, `docs/CODE_STRUCTURE_SPEC.md`를 참고한다. 전체 구현을 시작할 권한이 부여된 것으로 해석하지 않는다. 편집 방식·자유 코드 실증, 기술 선택, 전체 구현 순서로 진행한다.
+- 대표 화면·서체·블록 편집·자유 코드 실증 검토는 완료했다. 2026-10-08 사용자 요청으로 현재 단계는 로컬 앱·CMS 골격과 저장·미리보기 연결 실증이다. 전체 화면 구현·공개 배포까지 승인된 것으로 해석하지 않는다. `docs/LOCAL_CMS_SETUP.md`와 `docs/STATUS.md`를 참고한다.
 - 확정 요구사항과 권장안, 미정 사항을 구분한다. 문서의 제안을 사용자 승인으로 바꾸지 않는다.
 - 사용자의 최신 직접 지시가 이 문서보다 우선한다. 승인된 변경은 관련 문서에도 반영한다.
 - 공개 이름은 미정이다. 첨부에 나온 실명이나 회사 이름을 확정값으로 사용하지 않는다.
@@ -22,7 +22,7 @@
 - KoddiBold는 사용자 테스트에 따라 정확히 1.5rem(24px) 또는 1.875rem(30px) 이상에서만 제한적으로 사용한다. 작은 UI는 Regular, 20px대 제목은 24px로 조정한다. 상세 제한은 코드 지침 참조.
 - 자유 블록은 HTML·CSS를 지원하고 JavaScript는 지원하지 않는다. 사이트와 다른 블록에 영향을 주지 않도록 격리한다.
 - 한국어만 초기 공개한다. 준비되지 않은 언어 메뉴를 노출하지 않는다.
-- 기술·서비스는 아직 확정되지 않았다. 가입, 유료 결제, 배포, 실제 문의 전송을 문서 작성 권한에 포함시키지 않는다.
+- Sanity Free + Cloudflare Workers Paid + D1 + Resend Free는 2026-10-02 사용자 채택 완료. 월 $5에 사이트 호스팅 포함, 도메인·세금·초과 사용 별도. Next.js/TypeScript 방향 유지, Cloudflare 배포 어댑터는 실증 후 선택한다. 가입·유료 결제·배포·실제 문의 전송을 로컬 골격 작성 권한에 포함시키지 않는다.
 - 기존 사용자 변경을 덮어쓰거나 관련 없는 파일을 정리하지 않는다.
 - 사용자가 직접 커스텀할 수 있도록 단순하고 명시적인 코드 구조를 유지한다. 상세 규칙은 `docs/CODE_GUIDELINES.md`를 따른다.
 - 별도 요청이나 적용되는 지침 없이 하위 에이전트를 생성하지 않는다.
@@ -45,3 +45,13 @@
 - 비밀키, 실제 문의·비공개 고객 자료, 환경변수 값, 빌드 산출물을 커밋하지 않는다. Git은 CMS 콘텐츠와 원본 이미지 백업을 대신하지 않는다.
 
 기준일: 2026-10-01 (Asia/Seoul)
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

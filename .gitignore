@@ -4,3 +4,8 @@
 /docs/CMS_OPERATIONS_DECISION.md
 
 fonts
+/node_modules/
+/.next/
+/.env*
+!/.env.example
+/*.tsbuildinfo
