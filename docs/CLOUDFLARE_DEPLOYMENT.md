@@ -1,0 +1,59 @@
+# Cloudflare 배포 준비
+
+확인일: 2026-10-08. 현재는 로컬 실증까지다. 계정 생성·요금제 변경·원격 배포는 수행하지 않았다.
+
+## 실행 경로와 선택 상태
+
+기존 Next.js 개발 경로는 유지한다. Cloudflare용으로 vinext 1.0.1 + Cloudflare Vite 플러그인을 병행 추가했다. 공식 안내는 vinext를 권장하지만 베타이며 Next.js API를 Vite에서 구현하는 별도 런타임이다. 기존 Next.js 자체를 그대로 실행하는 어댑터로 해석하지 않는다. OpenNext는 대안이며 이번 작업에서 설치·검증하지 않았다. 최종 채택은 운영 요구와 아래 제한 검토 후 결정한다.
+
+공식 자료: https://developers.cloudflare.com/workers/framework-guides/web-apps/nextjs/
+
+```powershell
+npm ci
+npm run dev
+# Cloudflare용 빌드와 로컬 실행
+npm run build:vinext
+npm run start:vinext -- --port 8787
+```
+
+일반 개발은 3000, 로컬 Worker는 8787이다. 둘 모두 로컬 주소이며 외부 접속 주소가 아니다. Worker 시작 후 http://127.0.0.1:8787/preview 에서 인증한다. Studio는 기존 http://127.0.0.1:3000/studio 사용 가능.
+
+## 설정과 비밀 값
+
+- wrangler.jsonc: 임시 Worker 리소스 이름 portfolio-web, workers_dev 활성화, 공개 Project ID·dataset, CONTENT_SOURCE=sanity. 공개 이름 결정과 별개다.
+- .env.local: Next 개발과 빌드의 공개 Sanity 설정, 서버 초안 조회 토큰·미리보기 키. Git 제외.
+- .dev.vars: 로컬 Worker의 SANITY_API_READ_TOKEN·PREVIEW_SECRET. .dev.vars.example을 기준으로 작성, Git 제외. 현재 로컬 값은 .env.local과 동일하게 준비했다.
+- 빌드가 dist/server/.dev.vars를 복사하므로 dist 전체도 Git 제외. 배포 시 로컬 파일을 원격 secret 등록으로 간주하지 않는다.
+- 비밀 값은 브라우저에 전달하거나 NEXT_PUBLIC_ 접두사를 붙이지 않는다. 빌드 산출물 JS/JSON/HTML에서 실제 비밀 값이 없는 것을 검사했다.
+
+## 실제 배포 시 순서 (아직 실행하지 않음)
+
+1. 사용자가 Cloudflare 계정과 Workers 요금제 상태를 확인하고 원격 배포를 승인한다. 현재 선택은 Workers Paid 기본 월 $5, 도메인·세금·초과 사용 별도다.
+2. 프로젝트 터미널에서 `npx wrangler login`으로 사용자 계정 인증. 로그인·토큰 값은 채팅에 보내지 않는다.
+3. `npx wrangler secret put SANITY_API_READ_TOKEN --config wrangler.jsonc`, `npx wrangler secret put PREVIEW_SECRET --config wrangler.jsonc`로 사용자 입력을 통해 원격 secret 등록. 이 명령은 원격 리소스를 변경하므로 승인된 배포 단계에 실행한다.
+4. `npm run build:vinext` 후 `npm run deploy:vinext`. 배포 출력의 실제 workers.dev 주소를 기록한다. 계정 subdomain 미확정이므로 주소를 미리 만들지 않는다.
+5. Sanity 관리에서 실제 배포 origin을 CORS에 추가하고 Studio 인증을 위해 credentials를 허용한다. 전체 origin wildcard는 사용하지 않는다.
+6. 외부 브라우저에서 홈·Studio 로그인·공개 상세·초안 인증·미리보기 종료를 확인한다. 미리보기 키는 POST 폼에만 입력한다.
+
+D1·Resend·문의 기능은 아직 연결하지 않았다. KV/R2/이미지 서비스와 CDN·데이터 캐시는 이번 실증에 추가하지 않았다. 실제 프로젝트 콘텐츠에는 별도 이미지 최적화 설계가 필요하다.
+
+## 검증과 남은 제한
+
+- vinext 정적 호환성 검사: 지원 항목 11개, 정적 문제 0개. 전체 런타임 호환성을 보장하지 않는다.
+- Cloudflare용 빌드 성공, 로컬 workerd 실행 성공.
+- 저장된 테스트 초안 2블록을 재조회하고 인증된 상세에서 자유 HTML·CSS 원본 일치 확인. 공개본 없음, 일반 요청 404.
+- 자유 블록은 현재 코드 텍스트 표시다. 실제 앱의 sandbox 렌더러·모바일 높이 연결은 미구현이며 기존 prototype 실증과 구분한다.
+- Studio 브라우저 로그인·편집은 사용자가 기존 Next 로컬 화면에서 수행했다. Worker에서 Studio 편집·공개 후 수정·미리보기 실시간 갱신은 미검증.
+- npm audit 29건(중간 13, 높음 16). 강제 버전 변경은 하지 않았으며 공개 전 영향·업그레이드 검토 필요.
+- Next와 vinext가 같은 .next 타입 파일을 생성한다. typecheck는 next typegen을 먼저 실행해 충돌을 복구한다. 두 도구의 빌드를 동시에 실행하지 않는다.
+- 빌드 경고(rxjs import 최적화, 큰 Studio 청크 등)가 남았다. 로컬 HTTP 실증 통과와 별개로 운영 화면 성능·의존성 검토가 필요하다.
+
+재검증:
+```powershell
+npm run typecheck
+npm test
+npx --no-install tsx scripts/check-cms.ts
+$env:CMS_CHECK_BASE_URL='http://127.0.0.1:8787'
+npx --no-install tsx scripts/check-cms.ts
+```
+이 스크립트는 fixture=true 테스트 문서를 읽기만 한다. CMS를 수정·공개하지 않으며 비밀 값·원본 콘텐츠·쿠키를 출력하지 않는다.

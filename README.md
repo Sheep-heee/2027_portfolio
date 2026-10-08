@@ -2,7 +2,7 @@
 
 외주 문의와 작업 역량·경력 확인을 위한 포트폴리오 프로젝트입니다. 초기에는 한국어로 공개하며, 브라우저 콘텐츠 편집과 이후 다국어 확장을 목표로 합니다.
 
-현재는 **대표 화면 검토 단계**입니다. 독립적인 디자인 시안이 있으며 전체 애플리케이션, 배포 환경, 서비스 계정은 아직 구성하지 않았습니다.
+현재는 **실제 CMS 저장·미리보기와 Cloudflare 배포 준비 단계**입니다. 대표 시안 검토는 완료했고 Next.js/Sanity 연결 골격을 실증했습니다. 전체 사이트·문의·외부 배포는 아직 완료하지 않았습니다.
 
 대표 시안 실행: `node prototype/server.cjs` → http://127.0.0.1:4173/review.html . 상세 안내는 [시안 README](prototype/README.md)를 참고하세요.
 
@@ -26,6 +26,8 @@
 이 문서는 대화 맥락을 보존하는 설계 지침입니다. 아직 없는 구현이나 설정을 설명하는 실행 매뉴얼은 아닙니다. 기술 선택과 구현이 진행되면 실행·배포·환경변수·복구 절차를 실제 검증 결과에 맞춰 추가합니다. 비밀키나 계정 비밀번호를 문서에 넣지 않습니다.
 # 로컬 앱·CMS 연결 실증 (2026-10-08)
 
-승인된 prototype 시안과 별도로 루트에 Next.js/TypeScript·Sanity Studio 연결 골격을 추가했다. `npm install` → `npm run dev` → http://127.0.0.1:3000 . 현재는 읽기 전용 테스트 콘텐츠이며 실제 Sanity 저장은 프로젝트 준비 후 검증한다.
+승인된 prototype 시안과 별도로 루트에 Next.js/TypeScript·Sanity Studio 연결 골격을 추가했다. `npm ci` → `npm run dev` → http://127.0.0.1:3000 . 사용자가 Sanity Studio에 저장한 실제 테스트 초안 2블록을 조회하고 인증된 미리보기의 원본 코드 일치를 확인했다.
 
 실행·환경변수·연결·검증·제한: [docs/LOCAL_CMS_SETUP.md](docs/LOCAL_CMS_SETUP.md). `.env.local`, `node_modules`, `.next`, 로컬 폰트는 Git에 포함하지 않는다. 현재 단계에서 전체 사이트·문의·배포는 구현하지 않았다.
+
+Cloudflare 후보 경로: `npm run build:vinext` → `npm run start:vinext -- --port 8787`. 실제 로컬 Worker에서 CMS 초안 검증까지 통과했다. vinext는 베타 후보이며 원격 배포는 수행하지 않았다. 계정·비밀 값·workers.dev 연결 순서는 [배포 준비 문서](docs/CLOUDFLARE_DEPLOYMENT.md)를 따른다. `.dev.vars`, `dist`, `.wrangler`도 Git에 포함하지 않는다.

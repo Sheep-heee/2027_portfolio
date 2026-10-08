@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portfolio-web",
+  "workers_dev": true,
+  "vars": {
+    "CONTENT_SOURCE": "sanity",
+    "NEXT_PUBLIC_SANITY_PROJECT_ID": "747xgg4i",
+    "NEXT_PUBLIC_SANITY_DATASET": "production"
+  },
+  "compatibility_date": "2026-10-08",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "main": "vinext/server/fetch-handler",
+  "assets": {
+    "directory": "dist/client",
+    "not_found_handling": "none",
+    "binding": "ASSETS"
+  }
+}

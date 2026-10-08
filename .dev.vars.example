@@ -1,0 +1,3 @@
+# Local Worker secrets. Actual values must not be committed.
+SANITY_API_READ_TOKEN=
+PREVIEW_SECRET=

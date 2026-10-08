@@ -85,3 +85,5 @@ src/
 - 도메인·서비스 소유권·과금 알림·업데이트 책임.
 
 실제 로컬 골격의 실행 명령·환경변수 이름은 `docs/LOCAL_CMS_SETUP.md`와 `.env.example`을 기준으로 한다. 실제 값은 Git에 넣지 않는다.
+
+Cloudflare 준비 후보는 기존 Next.js와 병행한 vinext 경로다. vite.config.ts·wrangler.jsonc만 배포 경계를 담당하며 콘텐츠 모델·CMS 조회를 복제하지 않는다. 베타 후보임을 유지하고 Next/vinext 빌드는 동시에 실행하지 않는다. npm run typecheck는 생성 타입 충돌을 방지하려고 next typegen을 먼저 수행한다. 로컬 Worker 비밀 값은 .dev.vars에만 저장하며 dist/server에 복사된 파일도 Git 제외한다. 상세는 docs/CLOUDFLARE_DEPLOYMENT.md.

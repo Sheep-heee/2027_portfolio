@@ -1,6 +1,6 @@
 # 로컬 앱·CMS 연결 실증
 
-작성: 2026-10-08. 사용자가 Sanity 프로젝트 생성을 완료했다고 알렸다. 프로젝트 ID·dataset 설정 및 실제 연결 검증은 아직 하지 않았다. 전체 사이트 구현·Cloudflare 배포·실제 문의는 이번 범위 밖이다.
+작성: 2026-10-08. Sanity 프로젝트 연결 후 사용자가 저장한 실제 테스트 초안의 조회·인증 미리보기·원본 코드 일치를 검증했다. 최신 결과는 이 문서 마지막 항목 및 STATUS.md 참고. 전체 사이트 구현·원격 Cloudflare 배포·실제 문의는 이번 범위 밖이다.
 
 ## 실행
 
@@ -61,3 +61,6 @@ Sanity Free의 published/non-draft 문서는 공개 API 접근 대상이다. 화
 - 설치된 직접 의존성 버전과 lockfile 고정. Next 16.4.0, React 19.3.0, Sanity 6.18.0, next-sanity 13.3.4. 로컬 Node 22.19.0.
 - `npm audit`와 일반 `npm audit fix` 후 18건(중간 9·높음 9) 남음. Sanity CLI/codegen 등 간접 의존성이 포함된다. 진단이 제안한 Sanity 5.14.1 강제 변경은 현재 next-sanity의 peer 범위(^5.29 또는 ^6)보다 낮아 실행하지 않았다. 실제 노출 범위 평가·호환 가능한 공급자 수정판 확인은 공개 배포 전 과제다. 위험이 없다고 판단한 것이 아니다.
 - Sanity 로그인·실제 저장·공개본/초안 분리·이미지·실시간 미리보기·Workers 런타임은 미검증. 사용자 프로젝트 생성 후 진행한다.
+# 최신 검증 결과 (2026-10-08)
+
+아래 최초 준비 절차 이후 사용자가 실제 Sanity 테스트 초안 2블록을 저장했다. `npx --no-install tsx scripts/check-cms.ts`로 저장 재조회·원본 HTML/CSS·초안 인증·공개본 부재 404를 확인했다. 로컬 Next 3000과 Cloudflare Worker 8787 모두 통과. CMS를 수정하거나 공개하는 스크립트가 아니다. Cloudflare 준비와 미검증 범위는 [CLOUDFLARE_DEPLOYMENT.md](CLOUDFLARE_DEPLOYMENT.md)를 참고한다.

@@ -9,3 +9,8 @@ fonts
 /.env*
 !/.env.example
 /*.tsbuildinfo
+/dist/
+.vinext/
+.wrangler/
+/.dev.vars*
+!/.dev.vars.example

@@ -4,8 +4,13 @@ import { timingSafeEqual } from "node:crypto";
 import { getProject } from "@/services/sanity";
 export async function POST(request: Request) {
   const url = new URL(request.url);
+  // Next dev may normalize request.url to localhost. Host retains the
+  // browser-facing address; do not trust arbitrary forwarded-host headers.
+  const requestOrigin = new URL(url.origin);
+  const host = request.headers.get("host");
+  if (host) requestOrigin.host = host;
   const origin = request.headers.get("origin");
-  if (origin && origin !== url.origin)
+  if (origin && origin !== requestOrigin.origin)
     return new Response("요청 출처 오류", { status: 403 });
   const form = await request.formData();
   const secret = String(form.get("secret") || "");
@@ -21,7 +26,7 @@ export async function POST(request: Request) {
   if (!project) return new Response("프로젝트 없음", { status: 404 });
   (await draftMode()).enable();
   return NextResponse.redirect(
-    new URL(`/ko/projects/${slug}`, url.origin),
+    new URL(`/ko/projects/${slug}`, requestOrigin.origin),
     303,
   );
 }
